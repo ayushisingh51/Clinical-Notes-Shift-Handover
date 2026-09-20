@@ -1,0 +1,568 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* Sidebar */
+
+.sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e7eaf0;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 32px;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.logo h2 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.logo span {
+  font-size: 11px;
+  color: #8a94a6;
+}
+
+.nav-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9aa3b2;
+  margin: 18px 12px 8px;
+  letter-spacing: 0.08em;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 13px;
+  margin: 4px 0;
+  border-radius: 9px;
+  color: #697386;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-item span {
+  width: 20px;
+  text-align: center;
+  font-size: 17px;
+}
+
+.nav-item.active {
+  background: #eaf2ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.nav-item:hover {
+  background: #f2f5fa;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+.help-box {
+  background: #f5f8ff;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.help-box strong {
+  font-size: 13px;
+}
+
+.help-box p {
+  color: #7b8495;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.help-box button {
+  border: 0;
+  background: white;
+  color: #2563eb;
+  padding: 8px 12px;
+  border-radius: 7px;
+  font-size: 11px;
+}
+
+/* Main */
+
+.main-content {
+  flex: 1;
+  padding: 30px 40px;
+  overflow-x: hidden;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 27px;
+}
+
+.topbar p {
+  margin: 6px 0 0;
+  color: #8a94a6;
+  font-size: 13px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notification {
+  font-size: 21px;
+  color: #667085;
+  margin-right: 8px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #2563eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.profile strong,
+.profile span {
+  display: block;
+}
+
+.profile strong {
+  font-size: 13px;
+}
+
+.profile span {
+  font-size: 10px;
+  color: #8a94a6;
+}
+
+/* Welcome */
+
+.welcome {
+  margin: 32px 0 22px;
+  background: #2563eb;
+  border-radius: 15px;
+  padding: 25px 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.welcome h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.welcome p {
+  margin: 7px 0 0;
+  opacity: 0.8;
+  font-size: 13px;
+}
+
+.primary-button {
+  border: 0;
+  background: white;
+  color: #2563eb;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Stats */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid #e8ebf1;
+  border-radius: 13px;
+  padding: 18px;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+.blue {
+  background: #eaf2ff;
+  color: #2563eb;
+}
+
+.green {
+  background: #eafaf1;
+  color: #16a05d;
+}
+
+.orange {
+  background: #fff5e8;
+  color: #e99116;
+}
+
+.purple {
+  background: #f3edff;
+  color: #7c3aed;
+}
+
+.stat-card span {
+  color: #7d8798;
+  font-size: 11px;
+}
+
+.stat-card h3 {
+  margin: 4px 0;
+  font-size: 23px;
+}
+
+.stat-card small {
+  color: #9aa3b2;
+  font-size: 9px;
+}
+
+/* Panels */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid #e8ebf1;
+  border-radius: 13px;
+  padding: 21px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.panel-header p {
+  margin: 5px 0 0;
+  color: #939baa;
+  font-size: 11px;
+}
+
+.view-button {
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Patients */
+
+.table-header,
+.patient-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-header {
+  color: #9aa3b2;
+  font-size: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.patient-row {
+  padding: 13px 0;
+  border-bottom: 1px solid #f0f1f4;
+}
+
+.patient-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.patient-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #edf2f8;
+  color: #526070;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.patient-info strong,
+.patient-info span {
+  display: block;
+}
+
+.patient-info strong {
+  font-size: 11px;
+}
+
+.patient-info span {
+  margin-top: 3px;
+  font-size: 9px;
+  color: #9aa3b2;
+}
+
+.status {
+  width: fit-content;
+  padding: 5px 8px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.status.stable {
+  color: #159957;
+  background: #eaf9f0;
+}
+
+.status.attention {
+  color: #d47c08;
+  background: #fff4df;
+}
+
+.update-time {
+  font-size: 9px;
+  color: #929aaa;
+}
+
+/* Handover */
+
+.shift-info {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px;
+  background: #f6f9ff;
+  border-radius: 10px;
+}
+
+.shift-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  background: #e5efff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shift-info span {
+  font-size: 9px;
+  color: #8e97a7;
+}
+
+.shift-info h3 {
+  margin: 3px 0;
+  font-size: 13px;
+}
+
+.shift-info p {
+  margin: 0;
+  font-size: 9px;
+  color: #8993a4;
+}
+
+.handover-status {
+  display: flex;
+  gap: 9px;
+  margin: 18px 0;
+  align-items: center;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #f59e0b;
+  border-radius: 50%;
+}
+
+.handover-status strong {
+  font-size: 11px;
+}
+
+.handover-status p {
+  margin: 3px 0;
+  color: #929aaa;
+  font-size: 9px;
+}
+
+.handover-button {
+  width: 100%;
+  border: 0;
+  background: #2563eb;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Activity */
+
+.activity-panel {
+  margin-top: 18px;
+}
+
+.activity {
+  display: grid;
+  grid-template-columns: 35px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f0f1f4;
+}
+
+.activity-icon {
+  width: 31px;
+  height: 31px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.activity strong {
+  font-size: 11px;
+}
+
+.activity p {
+  margin: 3px 0;
+  color: #8f98a8;
+  font-size: 9px;
+}
+
+.activity > span {
+  color: #9aa3b2;
+  font-size: 9px;
+}
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+  .sidebar {
+    width: 210px;
+  }
+
+  .main-content {
+    padding: 25px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 750px) {
+  .sidebar {
+    display: none;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-content {
+    padding: 18px;
+  }
+
+  .welcome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile > div:not(.avatar):not(.notification) {
+    display: none;
+  }
+}
