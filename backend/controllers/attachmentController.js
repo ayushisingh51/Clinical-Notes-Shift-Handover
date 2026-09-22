@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path");
 const Attachment = require("../models/Attachment");
 const Patient = require("../models/Patient");
 const ClinicalNote = require("../models/ClinicalNote");
@@ -126,7 +128,7 @@ const getAttachmentById = asyncHandler(async (req, res) => {
 
 // Delete attachment
 const deleteAttachment = asyncHandler(async (req, res) => {
-  const attachment = await Attachment.findByIdAndDelete(req.params.id);
+  const attachment = await Attachment.findById(req.params.id);
 
   if (!attachment) {
     return res.status(404).json({
@@ -135,11 +137,26 @@ const deleteAttachment = asyncHandler(async (req, res) => {
     });
   }
 
+  // Delete physical file from uploads/attachments
+  const filePath = path.join(
+    __dirname,
+    "..",
+    attachment.filePath
+  );
+
+  if (fs.existsSync(filePath)) {
+    fs.unlinkSync(filePath);
+  }
+
+  // Delete database record
+  await Attachment.findByIdAndDelete(req.params.id);
+
   await logAction({
     user: req.user,
     action: "DELETE",
     resourceType: "Attachment",
     resourceId: attachment._id,
+    details: `Deleted attachment ${attachment.originalName}`,
     req,
   });
 
@@ -148,10 +165,3 @@ const deleteAttachment = asyncHandler(async (req, res) => {
     message: "Attachment deleted",
   });
 });
-
-module.exports = {
-  uploadAttachment,
-  getAttachmentsByPatient,
-  getAttachmentById,
-  deleteAttachment,
-};
