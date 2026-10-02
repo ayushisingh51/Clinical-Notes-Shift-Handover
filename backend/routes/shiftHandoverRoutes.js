@@ -1,4 +1,5 @@
 const express = require("express");
+
 const {
   getHandovers,
   getHandoverById,
@@ -7,13 +8,51 @@ const {
   deleteHandover,
 } = require("../controllers/shiftHandoverController");
 
+const authMiddleware = require("../middleware/authMiddleware");
+const allowRoles = require("../middleware/roleMiddleware");
+
 const router = express.Router();
 
-router.route("/").get(getHandovers).post(createHandover);
+
+// ===============================
+// SHIFT HANDOVERS
+// ===============================
+
+router
+  .route("/")
+  .get(
+    authMiddleware,
+    allowRoles("admin", "doctor", "staff", "viewer"),
+    getHandovers
+  )
+  .post(
+    authMiddleware,
+    allowRoles("admin", "doctor", "staff"),
+    createHandover
+  );
+
+
+// ===============================
+// SINGLE SHIFT HANDOVER
+// ===============================
+
 router
   .route("/:id")
-  .get(getHandoverById)
-  .put(updateHandover)
-  .delete(deleteHandover);
+  .get(
+    authMiddleware,
+    allowRoles("admin", "doctor", "staff", "viewer"),
+    getHandoverById
+  )
+  .put(
+    authMiddleware,
+    allowRoles("admin", "doctor", "staff"),
+    updateHandover
+  )
+  .delete(
+    authMiddleware,
+    allowRoles("admin"),
+    deleteHandover
+  );
+
 
 module.exports = router;

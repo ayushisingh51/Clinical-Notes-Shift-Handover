@@ -1,0 +1,468 @@
+/* =========================================
+   USER MANAGEMENT PAGE
+========================================= */
+
+.user-management-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 40px;
+}
+
+.user-management-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.user-management-header {
+  margin-bottom: 30px;
+}
+
+.user-management-header h1 {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.user-management-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+
+/* =========================================
+   SECTION
+========================================= */
+
+.user-management-section {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.user-management-section h2 {
+  margin: 0 0 20px;
+  color: #1f2937;
+  font-size: 21px;
+}
+
+
+/* =========================================
+   CREATE USER FORM
+========================================= */
+
+.user-management-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.user-management-form input,
+.user-management-form select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f2937;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.user-management-form input:focus,
+.user-management-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.user-management-form input::placeholder {
+  color: #9ca3af;
+}
+
+
+/* =========================================
+   CREATE BUTTON
+========================================= */
+
+.create-user-button {
+  grid-column: 1 / -1;
+
+  padding: 13px 20px;
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease,
+              transform 0.2s ease;
+}
+
+.create-user-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.create-user-button:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================
+   USERS LIST HEADER
+========================================= */
+
+.users-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.users-list-header h2 {
+  margin: 0;
+}
+
+.users-list-header span {
+  background: #eef2ff;
+  color: #4338ca;
+
+  padding: 6px 12px;
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   USERS LIST
+========================================= */
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+/* =========================================
+   USER CARD
+========================================= */
+
+.user-card {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 17px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  transition: box-shadow 0.2s ease,
+              transform 0.2s ease;
+}
+
+.user-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   USER AVATAR
+========================================= */
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e0e7ff;
+  color: #3730a3;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   USER INFORMATION
+========================================= */
+
+.user-info {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.user-info strong {
+  color: #1f2937;
+  font-size: 15px;
+}
+
+.user-info > span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+
+/* =========================================
+   USER META
+========================================= */
+
+.user-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 3px;
+}
+
+
+/* =========================================
+   ROLE BADGES
+========================================= */
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 9px;
+
+  border-radius: 15px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: capitalize;
+}
+
+.role-admin {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.role-doctor {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.role-staff {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.role-viewer {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status-active,
+.status-inactive {
+  font-size: 11px;
+  font-weight: 600;
+
+  padding: 4px 9px;
+
+  border-radius: 15px;
+}
+
+.status-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-inactive {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+
+/* =========================================
+   USER ACTIONS
+========================================= */
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.user-actions button {
+  border: none;
+
+  padding: 9px 14px;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease,
+              transform 0.2s ease;
+}
+
+
+/* =========================================
+   DEACTIVATE BUTTON
+========================================= */
+
+.deactivate-button {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.deactivate-button:hover {
+  background: #fecaca;
+}
+
+
+/* =========================================
+   ACTIVATE BUTTON
+========================================= */
+
+.activate-button {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.activate-button:hover {
+  background: #bbf7d0;
+}
+
+
+/* =========================================
+   CURRENT USER
+========================================= */
+
+.current-user-label {
+  padding: 8px 12px;
+
+  background: #eff6ff;
+  color: #1d4ed8;
+
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   LOADING / EMPTY / ACCESS DENIED
+========================================= */
+
+.user-management-message {
+  text-align: center;
+
+  padding: 45px 20px;
+
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.user-management-message h2 {
+  margin-bottom: 8px;
+  color: #1f2937;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .user-management-page {
+    padding: 25px 18px;
+  }
+
+  .user-management-header h1 {
+    font-size: 27px;
+  }
+
+  .user-management-form {
+    grid-template-columns: 1fr;
+  }
+
+  .create-user-button {
+    grid-column: auto;
+  }
+
+  .user-card {
+    align-items: flex-start;
+  }
+
+  .user-actions {
+    margin-left: auto;
+  }
+}
+
+
+@media (max-width: 550px) {
+  .user-management-page {
+    padding: 20px 12px;
+  }
+
+  .user-management-section {
+    padding: 18px;
+  }
+
+  .user-card {
+    flex-wrap: wrap;
+  }
+
+  .user-info {
+    min-width: calc(100% - 65px);
+  }
+
+  .user-actions {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .user-actions button,
+  .current-user-label {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}

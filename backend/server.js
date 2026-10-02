@@ -7,6 +7,8 @@ const connectDB = require("./config/db");
 const patientRoutes = require("./routes/patientRoutes");
 const clinicalNoteRoutes = require("./routes/clinicalNoteRoutes");
 const shiftHandoverRoutes = require("./routes/shiftHandoverRoutes");
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 // Connect to Database
 connectDB();
@@ -22,6 +24,8 @@ app.get("/", (req, res) => {
   res.send("AI Clinical Notes Backend is Running 🚀");
 });
 
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/patients", patientRoutes);
 app.use("/api/clinical-notes", clinicalNoteRoutes);
 app.use("/api/handovers", shiftHandoverRoutes);

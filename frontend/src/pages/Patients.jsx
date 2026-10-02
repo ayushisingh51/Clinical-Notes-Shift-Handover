@@ -1,19 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import "./Patients.css";
+
+const API_URL = "http://localhost:5001";
 
 export default function Patients() {
+  const { user } = useAuth();
+
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // Form ke states
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
 
-  // Patients fetch karne ka function
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+
+  const token = localStorage.getItem("token");
+
+  // Fetch patients
   const fetchPatients = () => {
-    fetch('http://localhost:5000/api/patients')
+    fetch(`${API_URL}/api/patients`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        setPatients(data);
+        if (Array.isArray(data)) {
+          setPatients(data);
+        } else {
+          console.error("Error:", data);
+          setPatients([]);
+        }
+
         setLoading(false);
       })
       .catch((err) => {
@@ -26,69 +43,121 @@ export default function Patients() {
     fetchPatients();
   }, []);
 
-  // Form submit handle karne ka function (POST API Call)
+  // Add patient
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!name || !age) return;
 
-    fetch('http://localhost:5000/api/patients', {
-      method: 'POST',
+    fetch(`${API_URL}/api/patients`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ name, age: Number(age) }),
+      body: JSON.stringify({
+        name,
+        age: Number(age),
+      }),
     })
       .then((res) => res.json())
       .then((newPatient) => {
-        setPatients([...patients, newPatient]); // List me naya patient add kar do
-        setName(''); // Form clear kar do
-        setAge('');
+        if (newPatient.message) {
+          alert(newPatient.message);
+          return;
+        }
+
+        setPatients((prevPatients) => [
+          ...prevPatients,
+          newPatient,
+        ]);
+
+        setName("");
+        setAge("");
       })
-      .catch((err) => console.error("Error adding patient:", err));
+      .catch((err) => {
+        console.error("Error adding patient:", err);
+      });
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Patients</h1>
-      <p>Manage and view patient records.</p>
-      
-      {/* Naya Patient Add karne ka Form */}
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
-        <input 
-          type="text" 
-          placeholder="Patient Name" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          required
-          style={{ padding: '8px' }}
-        />
-        <input 
-          type="number" 
-          placeholder="Age" 
-          value={age} 
-          onChange={(e) => setAge(e.target.value)} 
-          required
-          style={{ padding: '8px' }}
-        />
-        <button type="submit" style={{ padding: '8px 16px', cursor: 'pointer' }}>Add Patient</button>
-      </form>
+  <div className="patients-page">
+    <div className="patients-container">
 
-      {/* Patients List Display */}
+      <div className="patients-header">
+        <h1>Patients</h1>
+        <p>Manage and view patient records.</p>
+      </div>
+
+      {/* Only Admin, Doctor and Staff can add patients */}
+      {user &&
+        ["admin", "doctor", "staff"].includes(user.role) && (
+          <form
+            onSubmit={handleSubmit}
+            className="patient-form"
+          >
+            <input
+              type="text"
+              placeholder="Patient Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+
+            <input
+              type="number"
+              placeholder="Age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+            />
+
+            <button
+              type="submit"
+              className="add-patient-button"
+            >
+              Add Patient
+            </button>
+          </form>
+        )}
+
+      {/* Patients List */}
       {loading ? (
-        <p>Loading patients...</p>
+        <div className="patients-loading">
+          Loading patients...
+        </div>
+      ) : patients.length === 0 ? (
+        <div className="patients-message">
+          No patients found.
+        </div>
       ) : (
-        <ul>
-          {patients.length === 0 ? (
-            <p>No patients found.</p>
-          ) : (
-            patients.map((patient) => (
-              <li key={patient._id || patient.id} style={{ marginBottom: '8px' }}>
-                <strong>{patient.name}</strong> (Age: {patient.age})
-              </li>
-            ))
-          )}
-        </ul>
+        <div className="patients-list">
+          {patients.map((patient) => (
+            <div
+              className="patient-card"
+              key={patient._id || patient.id}
+            >
+              <div className="patient-card-avatar">
+                {patient.name
+                  ? patient.name
+                      .split(" ")
+                      .map((word) => word[0])
+                      .join("")
+                      .substring(0, 2)
+                      .toUpperCase()
+                  : "P"}
+              </div>
+
+              <div className="patient-card-info">
+                <strong>{patient.name}</strong>
+                <span>Age: {patient.age}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
+
     </div>
-  );
+  </div>
+);
 }

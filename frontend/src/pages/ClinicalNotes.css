@@ -1,0 +1,210 @@
+.clinical-notes-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 40px;
+  color: #172033;
+}
+
+.clinical-notes-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+
+.clinical-notes-header {
+  margin-bottom: 30px;
+}
+
+.clinical-notes-header h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #172033;
+}
+
+.clinical-notes-header p {
+  margin: 7px 0 0;
+  color: #8a94a6;
+  font-size: 14px;
+}
+
+/* Form */
+
+.clinical-note-form {
+  background: #ffffff;
+  border: 1px solid #e5e9f0;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 25px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.clinical-note-form input,
+.clinical-note-form textarea {
+  width: 100%;
+  padding: 12px 13px;
+
+  border: 1px solid #dce1e9;
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 13px;
+  color: #172033;
+
+  outline: none;
+  background: #ffffff;
+}
+
+.clinical-note-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.clinical-note-form input::placeholder,
+.clinical-note-form textarea::placeholder {
+  color: #a1a9b8;
+}
+
+.clinical-note-form input:focus,
+.clinical-note-form textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Button */
+
+.add-note-button {
+  align-self: flex-start;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  padding: 11px 18px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.add-note-button:hover {
+  background: #1d4ed8;
+}
+
+/* Loading / Empty */
+
+.clinical-notes-loading,
+.clinical-notes-message {
+  background: #ffffff;
+  border: 1px solid #e5e9f0;
+  border-radius: 14px;
+
+  min-height: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #8a94a6;
+  font-size: 15px;
+}
+
+/* List */
+
+.clinical-notes-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+/* Note Card */
+
+.clinical-note-card {
+  background: #ffffff;
+  border: 1px solid #e5e9f0;
+  border-radius: 14px;
+
+  padding: 18px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.clinical-note-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(23, 32, 51, 0.07);
+}
+
+/* Icon */
+
+.clinical-note-icon {
+  width: 44px;
+  height: 44px;
+
+  border-radius: 11px;
+
+  background: #eaf2ff;
+  color: #2563eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  flex-shrink: 0;
+}
+
+/* Information */
+
+.clinical-note-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.clinical-note-info strong {
+  font-size: 14px;
+  color: #172033;
+}
+
+.clinical-note-info span {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #8a94a6;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .clinical-notes-page {
+    padding: 25px;
+  }
+
+  .clinical-notes-header h1 {
+    font-size: 27px;
+  }
+}
+
+@media (max-width: 500px) {
+  .clinical-notes-page {
+    padding: 18px;
+  }
+
+  .add-note-button {
+    width: 100%;
+  }
+}

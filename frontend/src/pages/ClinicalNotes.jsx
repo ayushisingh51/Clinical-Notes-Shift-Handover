@@ -1,19 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import "./ClinicalNotes.css";
+
+const API_URL = "http://localhost:5001";
 
 export default function ClinicalNotes() {
+  const { user } = useAuth();
+
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Form states
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  // Fetch clinical notes function
+  const token = localStorage.getItem("token");
+
+  // Fetch clinical notes
   const fetchNotes = () => {
-    fetch('http://localhost:5000/api/clinical-notes')
+    fetch(`${API_URL}/api/clinical-notes`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
-        setNotes(data);
+        if (Array.isArray(data)) {
+          setNotes(data);
+        } else {
+          console.error("Error:", data);
+          setNotes([]);
+        }
+
         setLoading(false);
       })
       .catch((err) => {
@@ -26,68 +43,119 @@ export default function ClinicalNotes() {
     fetchNotes();
   }, []);
 
-  // Handle form submission (POST API call)
+  // Add clinical note
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!title || !description) return;
 
-    fetch('http://localhost:5000/api/clinical-notes', {
-      method: 'POST',
+    fetch(`${API_URL}/api/clinical-notes`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ title, description }),
+      body: JSON.stringify({
+        title,
+        description,
+      }),
     })
       .then((res) => res.json())
       .then((newNote) => {
-        setNotes([...notes, newNote]); // Add new note to the list
-        setTitle(''); // Clear form fields
-        setDescription('');
+        if (newNote.message && !newNote._id) {
+          alert(newNote.message);
+          return;
+        }
+
+        setNotes((prevNotes) => [
+          ...prevNotes,
+          newNote,
+        ]);
+
+        setTitle("");
+        setDescription("");
       })
-      .catch((err) => console.error("Error adding clinical note:", err));
+      .catch((err) => {
+        console.error("Error adding clinical note:", err);
+      });
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Clinical Notes</h1>
-      <p>View and manage patient clinical notes.</p>
-      
-      {/* Form to add a new clinical note */}
-      <form onSubmit={handleSubmit} style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '400px' }}>
-        <input 
-          type="text" 
-          placeholder="Note Title" 
-          value={title} 
-          onChange={(e) => setTitle(e.target.value)} 
-          required
-          style={{ padding: '8px' }}
-        />
-        <textarea 
-          placeholder="Note Description / Content" 
-          value={description} 
-          onChange={(e) => setDescription(e.target.value)} 
-          required
-          style={{ padding: '8px', minHeight: '80px' }}
-        />
-        <button type="submit" style={{ padding: '8px 16px', cursor: 'pointer' }}>Add Clinical Note</button>
-      </form>
+    <div className="clinical-notes-page">
+      <div className="clinical-notes-container">
 
-      {/* Display Clinical Notes List */}
-      {loading ? (
-        <p>Loading clinical notes...</p>
-      ) : (
-        <ul>
-          {notes.length === 0 ? (
-            <p>No clinical notes found.</p>
-          ) : (
-            notes.map((note) => (
-              <li key={note._id || note.id} style={{ marginBottom: '12px' }}>
-                <strong>{note.title}</strong>: {note.description || note.content}
-              </li>
-            ))
+        {/* Header */}
+        <div className="clinical-notes-header">
+          <h1>Clinical Notes</h1>
+          <p>View and manage patient clinical notes.</p>
+        </div>
+
+        {/* Only Admin, Doctor and Staff can create notes */}
+        {user &&
+          ["admin", "doctor", "staff"].includes(user.role) && (
+            <form
+              onSubmit={handleSubmit}
+              className="clinical-note-form"
+            >
+              <input
+                type="text"
+                placeholder="Note Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+
+              <textarea
+                placeholder="Note Description / Content"
+                value={description}
+                onChange={(e) =>
+                  setDescription(e.target.value)
+                }
+                required
+              />
+
+              <button
+                type="submit"
+                className="add-note-button"
+              >
+                Add Clinical Note
+              </button>
+            </form>
           )}
-        </ul>
-      )}
+
+        {/* Clinical Notes List */}
+        {loading ? (
+          <div className="clinical-notes-loading">
+            Loading clinical notes...
+          </div>
+        ) : notes.length === 0 ? (
+          <div className="clinical-notes-message">
+            No clinical notes found.
+          </div>
+        ) : (
+          <div className="clinical-notes-list">
+            {notes.map((note) => (
+              <div
+                className="clinical-note-card"
+                key={note._id || note.id}
+              >
+                <div className="clinical-note-icon">
+                  N
+                </div>
+
+                <div className="clinical-note-info">
+                  <strong>{note.title}</strong>
+
+                  <span>
+                    {note.description || note.content}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }
